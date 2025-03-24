@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock App</title>
+</head>
+<body>
+  <h1>Welcome to the Stock App</h1>
+  <p>Enter a ticker symbol to fetch stock data:</p>
+  
+  <!-- Input field for ticker symbol -->
+  <input type="text" id="ticker" placeholder="Ticker Symbol">
+  <button onclick="fetchStockData()">Get Stock Data</button>
+  
+  <!-- Area to display the results -->
+  <div id="results"></div>
+
+  <!-- JavaScript to handle the API call -->
+  <script>
+    function fetchStockData() {
+      const ticker = document.getElementById('ticker').value;
+      if (!ticker) {
+        alert('Please enter a ticker symbol.');
+        return;
+      }
+      
+      // Assuming your backend API endpoint is set up at /stock
+      fetch(`/stock?ticker=${ticker}`)
+        .then(response => response.json())
+        .then(data => {
+          // Display the data as a formatted JSON string
+          document.getElementById('results').innerText = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          document.getElementById('results').innerText = 'Error fetching data.';
+        });
+    }
+  </script>
+</body>
+</html>
